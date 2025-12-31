@@ -1,0 +1,23 @@
+Hướng dẫn sử dụng ComfyUI trên Vast.ai với Photoshop
+
+Bước 1: Thuê GPU trên Vast.ai
+- Truy cập link sau để thuê GPU (cấu hình đã được thiết lập sẵn):
+- \VastAI.url
+
+Bước 2: Tạo SSH Key
+Chạy file generate_ssh_key.bat
+Làm theo hướng dẫn hiển thị trên màn hình
+
+Bước 3: Cài đặt Plugin cho Photoshop
+- Copy toàn bộ thư mục nhutuan_plugin
+- Dán vào thư mục Plug-ins của Photoshop:   <thư mục cài đặt Photoshop>/Plug-ins/
+- Ví dụ: C:\Program Files\Adobe\Adobe Photoshop 2024\Plug-ins\
+- Khởi động lại Photoshop
+
+Bước 4: Kết nối với Server
+- Chạy file auto_vast_pts.bat
+
+Bước 5: Sử dụng
+- Mở Photoshop và bắt đầu sử dụng plugin
+
+Lưu ý: Đảm bảo bạn đã hoàn thành đầy đủ các bước theo thứ tự để plugin hoạt động bình thường.

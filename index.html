@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hướng Dẫn ComfyUI trên Vast.ai với Photoshop</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+
+        .author-info {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+        }
+
+        .content {
+            padding: 40px;
+        }
+
+        .download-section {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            text-align: center;
+            color: white;
+        }
+
+        .download-btn {
+            display: inline-block;
+            background: white;
+            color: #f5576c;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.2em;
+            margin: 10px;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .download-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+
+        .step {
+            background: #f8f9fa;
+            border-left: 5px solid #667eea;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 50px;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 15px;
+            float: left;
+        }
+
+        .step h3 {
+            color: #2c5364;
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            margin-left: 65px;
+        }
+
+        .step-content {
+            clear: both;
+            padding-top: 10px;
+        }
+
+        .step ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step li {
+            padding: 10px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .step li:before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .warning h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .success {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success h4 {
+            color: #155724;
+            margin-bottom: 10px;
+        }
+
+        .file-list {
+            background: #e9ecef;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .file-list h4 {
+            margin-bottom: 15px;
+            color: #2c5364;
+        }
+
+        .file-item {
+            background: white;
+            padding: 10px 15px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            background: #2c5364;
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .contact-btn {
+            display: inline-block;
+            background: #25d366;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 10px;
+            transition: transform 0.3s;
+        }
+
+        .contact-btn:hover {
+            transform: scale(1.05);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.8em;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .step {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 ComfyUI trên Vast.ai với Photoshop</h1>
+            <p>Hướng dẫn chi tiết từ A đến Z</p>
+            <div class="author-info">
+                <strong>👨‍🏫 Tác giả:</strong> Trần Như Tuấn<br>
+                <strong>📱 Zalo/SĐT:</strong> 0379031662
+            </div>
+        </div>
+
+        <div class="content">
+            <div class="download-section">
+                <h2>📦 TẢI XUỐNG TÀI LIỆU</h2>
+                <p style="margin: 20px 0;">Tải xuống tất cả các file cần thiết để bắt đầu</p>
+                <a href="nhutuan_plugin.7z" class="download-btn" download>📥 Plugin (7z)</a>
+                <a href="huondan.bat" class="download-btn" download>🔧 File Hướng Dẫn</a>
+                <a href="https://cloud.vast.ai/?ref_id=221650&creator_id=221650&name=ComfyUI%208GB%20-%20Storage" class="download-btn" target="_blank">🔗 Thuê GPU Vast.ai</a>
+            </div>
+
+            <div class="file-list">
+                <h4>📂 Danh sách file trong gói tải về:</h4>
+                <div class="file-item">📄 huondan.bat - File hướng dẫn tương tác</div>
+                <div class="file-item">📦 nhutuan_plugin.7z - Plugin cho Photoshop</div>
+                <div class="file-item">🔗 Vast.ai - Thuê GPU.url - Link thuê GPU</div>
+                <div class="file-item">🔑 generate_ssh_key.bat - Tạo SSH Key</div>
+                <div class="file-item">🌐 auto_vast_pts.bat - Kết nối server</div>
+                <div class="file-item">📝 Huong dan.txt - Tài liệu hướng dẫn</div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Thuê GPU trên Vast.ai</h3>
+                <div class="step-content">
+                    <ul>
+                        <li>Nhấn vào nút <strong>"🔗 Thuê GPU Vast.ai"</strong> ở phía trên</li>
+                        <li>Link đã được cấu hình sẵn với template ComfyUI 8GB</li>
+                        <li>Đăng ký/Đăng nhập tài khoản Vast.ai</li>
+                        <li>Chọn GPU có sẵn trong danh sách (đã được lọc sẵn)</li>
+                        <li>Nhấn <strong>"Rent"</strong> để thuê GPU</li>
+                        <li>Sau khi thuê thành công, <strong>LƯU LẠI</strong> thông tin quan trọng:</li>
+                    </ul>
+                    <div class="warning">
+                        <h4>⚠️ Thông tin cần lưu:</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>✓ Địa chỉ IP của server</li>
+                            <li>✓ Port SSH</li>
+                            <li>✓ Thông tin đăng nhập SSH</li>
+                        </ul>
+                    </div>
+                    <div class="success">
+                        <h4>✅ Ưu điểm:</h4>
+                        <p>Template đã được cấu hình sẵn ComfyUI 8GB, bạn không cần cài đặt gì thêm trên server!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Tạo SSH Key</h3>
+                <div class="step-content">
+                    <ul>
+                        <li>Chạy file <strong>generate_ssh_key.bat</strong></li>
+                        <li>Làm theo hướng dẫn hiển thị trên màn hình</li>
+                        <li>SSH Key sẽ được tạo tự động</li>
+                        <li>Key này sẽ dùng để kết nối an toàn với server Vast.ai</li>
+                    </ul>
+                    <div class="success">
+                        <h4>✅ Mẹo:</h4>
+                        <p>Chỉ cần chạy file và làm theo từng bước, công cụ sẽ tự động xử lý việc tạo key cho bạn.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Cài đặt Plugin cho Photoshop</h3>
+                <div class="step-content">
+                    <ul>
+                        <li>Giải nén file <strong>nhutuan_plugin.7z</strong></li>
+                        <li>Copy toàn bộ thư mục <strong>nhutuan_plugin</strong></li>
+                        <li>Dán vào thư mục Plug-ins của Photoshop</li>
+                    </ul>
+                    <div class="code-block">
+Đường dẫn mẫu:<br>
+C:\Program Files\Adobe\Adobe Photoshop 2024\Plug-ins\nhutuan_plugin
+                    </div>
+                    <div class="warning">
+                        <h4>⚠️ Lưu ý:</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>✓ Đảm bảo copy đúng thư mục vào Plug-ins</li>
+                            <li>✓ Đóng Photoshop trước khi copy</li>
+                            <li>✓ Khởi động lại Photoshop sau khi cài đặt</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Kết nối với Server</h3>
+                <div class="step-content">
+                    <ul>
+                        <li>Chạy file <strong>auto_vast_pts.bat</strong></li>
+                        <li>Nhập thông tin IP và Port từ Vast.ai (đã lưu ở Bước 1)</li>
+                        <li>Chờ kết nối được thiết lập</li>
+                        <li>Khi kết nối thành công, cửa sổ sẽ hiển thị thông báo</li>
+                    </ul>
+                    <div class="success">
+                        <h4>✅ Kiểm tra kết nối:</h4>
+                        <p>Nếu kết nối thành công, bạn sẽ thấy thông báo "Kết nối thành công!" và có thể bắt đầu sử dụng.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="step">
+                <div class="step-number">5</div>
+                <h3>Sử dụng Plugin trong Photoshop</h3>
+                <div class="step-content">
+                    <ul>
+                        <li>Mở Photoshop</li>
+                        <li>Tìm plugin trong menu: <strong>Window → Extensions → Nhu Tuan Plugin</strong></li>
+                        <li>Bắt đầu sử dụng các tính năng AI</li>
+                    </ul>
+                    <div class="warning">
+                        <h4>⚠️ Điều kiện để plugin hoạt động:</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>✓ GPU trên Vast.ai đang chạy</li>
+                            <li>✓ Kết nối server đang hoạt động (auto_vast_pts.bat đang chạy)</li>
+                            <li>✓ Plugin đã được cài đặt đúng cách</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success" style="margin-top: 40px;">
+                <h4>🎉 Chúc mừng!</h4>
+                <p>Bạn đã hoàn thành tất cả các bước cài đặt. Giờ đây bạn có thể sử dụng ComfyUI với Photoshop thông qua GPU của Vast.ai. Chúc bạn sáng tạo thành công!</p>
+            </div>
+
+            <div class="warning" style="margin-top: 30px;">
+                <h4>💡 Một số lưu ý quan trọng:</h4>
+                <ul style="list-style: none; padding-left: 0;">
+                    <li>• Luôn kiểm tra GPU trên Vast.ai còn thời gian sử dụng</li>
+                    <li>• Không đóng cửa sổ auto_vast_pts.bat khi đang sử dụng</li>
+                    <li>• Lưu lại thông tin SSH để sử dụng lại sau này</li>
+                    <li>• Tắt GPU trên Vast.ai khi không sử dụng để tiết kiệm chi phí</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <h3>📞 Hỗ trợ & Liên hệ</h3>
+            <p>Nếu bạn gặp khó khăn trong quá trình cài đặt, vui lòng liên hệ:</p>
+            <a href="https://zalo.me/g/rktftw605" class="contact-btn" target="_blank" style="background: #0068FF; font-size: 1.1em; padding: 15px 50px;">👥 Hỏi đáp tại Nhóm Zalo</a>
+            <p style="margin-top: 20px; opacity: 0.8;">© 2024 - Trần Như Tuấn</p>
+        </div>
+    </div>
+</body>
+</html>
